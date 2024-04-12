@@ -7,15 +7,15 @@ public class Student {
     private String lName;
     private int gradeYear;
     private String studentID;
-    private String course;
-    private int tuitionBalance;
+    private String courses = " ";
+    private int tuitionBalance = 0;
     private static int courseCost = 180;
     private static int id = 1000;
 
     //constructor
     public Student(){
         Scanner in = new Scanner(System.in);
-        System.out.print("Enter student first Name:");
+        System.out.print("\nEnter student first Name:");
         this.fName = in.nextLine();
 
         System.out.print("Enter student last Name:");
@@ -25,7 +25,7 @@ public class Student {
         this.gradeYear = in.nextInt();
 
         setStudentID();
-        System.out.println(fName +" "+ lName +" "+studentID);
+        //System.out.println(fName +" "+ lName +" "+studentID);
 
     }
 
@@ -35,14 +35,42 @@ public class Student {
         this.studentID = gradeYear+""+id;
     }
     //enroll in courses
+    public void studEnroll(){
+        do{
+            System.out.print("Enter course to enroll (Q to quit): ");
+            Scanner in = new Scanner(System.in);
+            String course = in.nextLine();
+            if(!course.equals("Q")) {
+                courses = courses + "\n" + " " +course;
+                tuitionBalance = tuitionBalance + courseCost;
+            } else {break;}
+        } while(true);
+        //System.out.println("\nEnrolled in: " + courses);
+        //System.out.println("Tuition Balance: $" + tuitionBalance);
+    }
 
     //view balance
+    public void viewBalance(){
+        System.out.println("Your balance is: $" + tuitionBalance);
+    }
 
     //pay tuition
-
-    //show status
-
-    public static void main(String[] args) {
-        System.out.println("Hello world!");
+    public void payTuition(){
+        viewBalance();
+        System.out.print("Enter your payment amount: $");
+        Scanner in = new Scanner(System.in);
+        int payment = in.nextInt();
+        tuitionBalance = tuitionBalance - payment;
+        System.out.println("Thank you for your payment of $" + payment);
+        viewBalance();
     }
+    //show status
+    public String studentStatus(){
+        return "\nName: " + fName + " " + lName +
+                "\nGrade Year: " + gradeYear +
+                "\nStudent ID: " + studentID +
+                "\nCourses Enrolled:" + courses +
+                "\nBalance: $" + tuitionBalance;
+    }
+
 }
